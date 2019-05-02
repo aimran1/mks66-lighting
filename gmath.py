@@ -38,11 +38,17 @@ def calculate_ambient(alight, areflect):
     return acolor
 
 def calculate_diffuse(light, dreflect, normal):
+    #Il * kd
     #print(light)
     #print(dreflect)
     #print(normal)
-    #Il * kd
-    pass
+    dcolor = [0,0,0]
+    normalize(light[0])
+    normalize(normal)
+    for i in range(3):
+        dcolor[i] = light[1][i] * dreflect[i] * dot_product(light[0], normal)
+    print(dcolor)
+    return dcolor
 
 def calculate_specular(light, sreflect, view, normal):
     # Il * Ks * [(2(N(N . L)) - L) . V]^n
