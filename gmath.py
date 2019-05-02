@@ -29,14 +29,27 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
 
 def calculate_ambient(alight, areflect):
     #A*ka
-    pass
+    #print(alight)
+    #print(areflect)
+    acolor = [0,0,0]
+    for i in range(3):
+        acolor[i] = alight[i] * areflect[i]
+    #print(acolor)
+    return acolor
 
 def calculate_diffuse(light, dreflect, normal):
+    #print(light)
+    #print(dreflect)
+    #print(normal)
     #Il * kd
     pass
 
 def calculate_specular(light, sreflect, view, normal):
     # Il * Ks * [(2(N(N . L)) - L) . V]^n
+    #print(light)
+    #print(dreflect)
+    #print(normal)
+    #print(view)
     pass
 
 def limit_color(color):
