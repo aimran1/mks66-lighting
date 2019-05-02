@@ -27,7 +27,7 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     A = calculate_ambient(ambient,areflect)
     D = calculate_diffuse(light,dreflect,normal)
     S = calculate_specular(light,sreflect,view,normal)
-    return A + D + S
+    return [limit_color(A[0] + D[0] + C[0]), limit_color(A[1] + D[1] + C[1]), limit_color(A[2] + D[2] + C[2])]
 
 def calculate_ambient(alight, areflect):
     #A*ka
@@ -62,7 +62,7 @@ def calculate_specular(light, sreflect, view, normal):
     for i in range(3):
         scolor[i] = light[COLOR][i] * sreflect * (dot_product((2*(normal * (dot_product(normal,light[LOCATION])))- light[LOCATION]), view) ** SPECULAR_EXP)
     print(scolor)
-    pass
+    return scolor
 
 def limit_color(color):
     if color > 255:
