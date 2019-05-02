@@ -22,6 +22,8 @@ SPECULAR_EXP = 4
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
+    normalize(normal)
+    normalize(light[LOCATION])
     A = calculate_ambient(ambient,areflect)
     D = calculate_diffuse(light,dreflect,normal)
     S = calculate_specular(light,sreflect,view,normal)
@@ -44,18 +46,22 @@ def calculate_diffuse(light, dreflect, normal):
     #print(normal)
     dcolor = [0,0,0]
     normalize(light[0])
-    normalize(normal)
     for i in range(3):
-        dcolor[i] = light[1][i] * dreflect[i] * dot_product(light[0], normal)
-    print(dcolor)
+        dcolor[i] = light[COLOR][i] * dreflect[i] * dot_product(light[LOCATION], normal)
+    #print(dcolor)
     return dcolor
 
 def calculate_specular(light, sreflect, view, normal):
     # Il * Ks * [(2(N(N . L)) - L) . V]^n
     #print(light)
-    #print(dreflect)
+    #print(sreflect)
+    #print(normal)
     #print(normal)
     #print(view)
+    scolor = [0,0,0]
+    for i in range(3):
+        scolor[i] = light[COLOR][i] * sreflect * (dot_product((2*(normal * (dot_product(normal,light[LOCATION])))- light[LOCATION]), view) ** SPECULAR_EXP)
+    print(scolor)
     pass
 
 def limit_color(color):
