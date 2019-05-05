@@ -27,7 +27,7 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     S = calculate_specular(light,sreflect,view,normal)
     final = [0,0,0]
     for i in range(3):
-        final[i] = int(A[0]+D[0]+S[0])
+        final[i] = limit_color(int(A[i]+D[i]+S[i]))
     return final
 
 def calculate_ambient(alight, areflect):
@@ -76,14 +76,11 @@ def calculate_specular(light, sreflect, view, normal):
     return scolor
 
 def limit_color(color):
-    return [clamp(color[i],0,255) for i in range(3)]
-
-def clamp(x,minimum,maximum):
-    if x < minimum:
-        x = minimum
-    elif x > maximum:
-        x = maximum
-    return x
+    if color > 255:
+        color = 255
+    elif color < 0:
+        color = 0
+    return color
 
 #vector functions
 #normalize vetor, should modify the parameter
